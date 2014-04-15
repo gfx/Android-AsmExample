@@ -1,3 +1,5 @@
+import com.github.gfx.asmexample.ClassDumper
+
 apply plugin: 'android'
 
 android {
@@ -19,6 +21,14 @@ android {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+    applicationVariants.all { variant ->
+        variant.javaCompile.doLast {
+            String path = file('build/classes/debug/com/github/gfx/asmexample/app/MainActivity.class')
+            ClassDumper.dump([path])
+
         }
     }
 }
